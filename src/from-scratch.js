@@ -1,14 +1,11 @@
 // Recursion Problem Set: Coding Exercises
 
 // Calculate and return the total sum using recursive approach
-// Although this solution works, it is not a recursive solution, watch this short video on how to solve this function with recursion: https://www.youtube.com/watch?v=XzhiWs4f57o
-const sum = (arr) => {
-  if (arr.length === 0) return 0; // checking if the length of the arr is 0
-  return arr.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    0
-  );
-};
+const sum = (arr = [], sumOfArray = 0, index = 0) => {
+    if(arr.length === index) return sumOfArray
+    return sum(arr, sumOfArray + arr[index], index + 1)
+
+}
 
 // Reverse string using recursive approach
 const reverse = (str) => {
@@ -40,14 +37,28 @@ const fibIter = (n) => {
 };
 
 // Recursive fibonacci
-// here is a video that reviews this function: https://www.youtube.com/watch?v=EFXWgZJZqL8
-const fibRec = (n) => {
-  if (n <= 1) return; // you are not returning here, which is not giving back a value to the previous calls, you should be returning n
+const fibRec = (n) => {    
+    if(n <= 1) return n
 
   return fibRec(n - 1) + fibRec(n - 2);
 };
 
-// Return the index of target in arr, or -1 if not found using recursion
-const binarySearch = (arr, target, start = 0, end = arr.length - 1) => {};
+// Return the index of target in arr, or -1 if not found using recursion 
+const binarySearch = (arr, target, start = 0, end = arr.length - 1) => {
+// if target is not in the array base case
+if(start > end) return -1
+// find the middle index
+let middle = Math.floor((start + end) / 2) // gets the middle index
+// console.log(middle)
+//if the middle index is not the target
+if(arr[middle] === target) return middle // you have to do arr[middle], because middle is returning a number and doing arr[] will allow us to access the middle index of the array
+// check if the middle index is less than the target
+if(arr[middle] > target){
+   return binarySearch(arr, target, start, middle - 1)
+}else {
+// call the function recursivley
+return binarySearch(arr, target, middle + 1, end)
+}
+};
 
 module.exports = { sum, reverse, fibRec, fibIter, binarySearch };
